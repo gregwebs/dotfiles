@@ -1,0 +1,87 @@
+[user]
+        name = Greg Weber
+        email = gregwebs@users.noreply.github.com
+
+[color]
+  ui = auto
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[color]
+  ui = true
+[color "diff"]
+  whitespace = red reverse
+[core]
+  whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+  excludesfile = ~/.gitignore_global
+
+
+[alias]
+  st = status
+  ci = commit
+  br = branch
+  co = checkout
+  df = diff
+  up = !git remote update -p && git merge --ff-only @{u}
+  # View the SHA, description, and history graph of the latest 20 commits
+  l = log --pretty=oneline -n 20 --graph
+  # Pull in remote changes for the current repository and all its submodules
+  pall = !"git pull; git submodule foreach git pull origin master"
+  # Commit all changes
+  ca = commit -a
+  # Undo a `git push`
+  undopush = push -f origin HEAD^:master
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  # these don't show the author though
+  lol = log --graph --decorate --oneline
+  lola = log --graph --decorate --oneline --all
+  master-rebase = "!f() { git checkout master && git pull && git checkout $1 && git rebase master; }; f"
+  master-rebasei = "!f() { git checkout master && git pull && git checkout $1 && git rebase -i master; }; f"
+  supermerge = "!f() { git master-rebase $1 && git push -f origin $1 && git checkout master && git merge $1 --ff-only && git push origin master && git push origin :$1 && git branch -d $1 && echo 'supermerged!'; };f"
+  supermergei = "!f() { git master-rebasei $1 && git checkout master && git merge $1 --ff-only && git pushorigin master && git push origin :$1 && git branch -d $1 && echo 'supermerged!'; }; f"
+
+[apply]
+        # Detect whitespace errors when applying a patch
+        whitespace = fix
+
+# Use `origin` as the default remote on the `master` branch in all cases
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master
+[branch "main"]
+        remote = origin
+        merge = refs/heads/main
+
+# URL shorthands
+[url "git@github.com:"]
+        insteadOf = "gh:"
+        pushInsteadOf = "github:"
+        pushInsteadOf = "git://github.com/"
+[url "git://github.com/"]
+        insteadOf = "github:"
+[url "git@gist.github.com:"]
+        insteadOf = "gst:"
+        pushInsteadOf = "gist:"
+        pushInsteadOf = "git://gist.github.com/"
+[url "git://gist.github.com/"]
+        insteadOf = "gist:"
+[secrets]
+	providers = git secrets --aws-provider
+	patterns = (A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}
+	patterns = (\"|')?(AWS|aws|Aws)?_?(SECRET|secret|Secret)?_?(ACCESS|access|Access)?_?(KEY|key|Key)(\"|')?\\s*(:|=>|=)\\s*(\"|')?[A-Za-z0-9/\\+=]{40}(\"|')?
+	patterns = (\"|')?(AWS|aws|Aws)?_?(ACCOUNT|account|Account)_?(ID|id|Id)?(\"|')?\\s*(:|=>|=)\\s*(\"|')?[0-9]{4}\\-?[0-9]{4}\\-?[0-9]{4}(\"|')?
+	allowed = AKIAIOSFODNN7EXAMPLE
+	allowed = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+[init]
+	templateDir = ~/.git-templates/git-secrets
+	defaultBranch = main
