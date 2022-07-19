@@ -256,3 +256,34 @@ alias lal='ls -al'
 alias lt='ls -Crt'
 alias lrt='ls -lrt'
 alias lr='ls -lr'
+
+    function cdf() {
+      local dir;
+    
+      while true; do
+        # exit with ^D
+        dir="$(exa -a1D  | fzf --height 40% --reverse --no-multi --preview 'pwd' --preview-window=up,1,border-none --no-info)"
+        #dir="$(ls -a1p | grep '/$' | grep -v '^./$' | fzf --height 40% --reverse --no-multi --preview 'pwd' --preview-window=up,1,border-none --no-info)"
+        if [[ -z "${dir}" ]]; then
+          break
+        else
+          cd "${dir}"
+        fi
+      done
+    }
+
+    function cdfr() {
+      local dir;
+    
+      while true; do
+        # exit with ^D
+        dir="$(exa -a1DR | grep : | cut -d ':' -f 1 | fzf --height 40% --reverse --no-multi --preview 'pwd' --preview-window=up,1,border-none --no-info)"
+        if [[ -z "${dir}" ]]; then
+          break
+        else
+          cd "${dir}"
+        fi
+      done
+    }
+
+    alias pf="fzf --preview='less {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
