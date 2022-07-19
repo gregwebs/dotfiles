@@ -1,0 +1,27 @@
+#!/bin/bash
+set -eu
+
+if [ ! -d ~/dockerfiles ] ; then
+  pushd $HOME
+  git clone https://github.com/jessfraz/dockerfiles
+  popd
+fi
+
+pushd ~/dockerfiles
+cd cathode
+docker build -t cathode .
+popd
+
+xhost local:root
+
+exec docker run --rm -it --net=host \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v $HOME/.ssh:/root/.ssh:ro \
+    -v $(which git):/usr/local/bin/git:ro \
+    -v $(which ssh):/usr/local/bin/ssh:ro \
+    -v /lib/x86_64-linux-gnu/libcrypto.so.1.0.0:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0 \
+    -e DISPLAY=unix$DISPLAY \
+    -v "$PWD:$PWD" \
+    -w "$PWD" \
+    --name cathode \
+    cathode
