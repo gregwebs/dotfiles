@@ -1,0 +1,4 @@
+#!/bin/bash -e
+
+# TODO: automatically find host
+docker run --rm -v=`pwd`:/output matthewdodds/docker-schemaspy-postgres bash -c "java -jar schemaSpy.jar -t pgsql -db classroom_dev -host 172.17.0.37 -dp postgresql-jdbc4.jar -u postgres -p password -s public -o /output
