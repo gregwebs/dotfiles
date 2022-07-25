@@ -149,7 +149,7 @@ if [ -e ~/shell/auto-nix-shell.sh ]; then
 fi
 
 #export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-export PATH="$HOME/.local/bin:$HOME/bin:$HOME/go/bin:$PATH"
+export PATH="$HOME/bin/override:$HOME/.local/bin:$HOME/go/bin:$PATH:$HOME/bin"
 
 # source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 source "$HOME/.zsh/wezterm.sh"
