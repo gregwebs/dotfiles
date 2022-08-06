@@ -150,9 +150,12 @@ fi
 
 #export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH="$HOME/bin/override:$HOME/.local/bin:$HOME/go/bin:$PATH:$HOME/bin"
+export PATH="/opt/homebrew/bin:$PATH"
 
 # source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 source "$HOME/.zsh/wezterm.sh"
 
-#export HOMEBREW_CURL_PATH=/opt/homebrew/Cellar/curl/7.83.1/bin/curl
-#export HOMEBREW_DEVELOPER=1
+export GPG_TTY=$(tty)
+
+export HOMEBREW_CURL_PATH="/opt/homebrew/Cellar/curl/$(ls -1 /opt/homebrew/Cellar/curl/ | tail -1)/bin/curl"
+export HOMEBREW_DEVELOPER=1
