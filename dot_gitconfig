@@ -1,6 +1,6 @@
 [user]
         name = Greg Weber
-        email = gregwebs@users.noreply.github.com
+	email = 1183+gregwebs@users.noreply.github.com
 
 [color]
   ui = auto
@@ -85,3 +85,5 @@
 [init]
 	templateDir = ~/.git-templates/git-secrets
 	defaultBranch = main
+[gpg]
+	program = /opt/homebrew/bin/gpg
