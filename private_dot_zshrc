@@ -157,5 +157,9 @@ source "$HOME/.zsh/wezterm.sh"
 
 export GPG_TTY=$(tty)
 
+if [[ $(uname) == Darwin ]] ; then
 export HOMEBREW_CURL_PATH="/opt/homebrew/Cellar/curl/$(ls -1 /opt/homebrew/Cellar/curl/ | tail -1)/bin/curl"
 export HOMEBREW_DEVELOPER=1
+else
+export HOMEBREW_CURL_PATH=/usr/local/bin/curl
+fi
