@@ -2,6 +2,9 @@
         name = Greg Weber
 	email = 1183+gregwebs@users.noreply.github.com
 
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+
 [color]
   ui = auto
 [color "branch"]
