@@ -144,9 +144,9 @@ bindkey -v
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)" > /dev/null
 
-if [ -e ~/shell/auto-nix-shell.sh ]; then
-  . ~/shell/auto-nix-shell.sh
-fi
+#if [ -e ~/shell/auto-nix-shell.sh ]; then
+#  . ~/shell/auto-nix-shell.sh
+#fi
 
 #export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH="$HOME/bin/override:$HOME/.local/bin:$HOME/go/bin:$PATH:$HOME/bin"
@@ -164,3 +164,21 @@ if [[ $(uname) == Darwin ]] ; then
 else
   export HOMEBREW_CURL_PATH=/usr/local/bin/curl
 fi
+
+function setup_conda() {
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/homebrew/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
+        . "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/homebrew/Caskroom/miniconda/base/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+}
+
