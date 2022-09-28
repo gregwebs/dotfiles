@@ -7,4 +7,6 @@
 : ${ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim}
 # }}} End configuration added by Zim install
 
+if [[ -d "$HOME/.cargo/env" ]] ; then
 . "$HOME/.cargo/env"
+fi
