@@ -141,8 +141,8 @@ source ~/.alias
 export EDITOR='nvim'
 bindkey -v
 
-eval "$(starship init zsh)"
-eval "$(zoxide init zsh)" > /dev/null
+command -v starship >/dev/null && eval "$(starship init zsh)"
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)" > /dev/null
 
 #if [ -e ~/shell/auto-nix-shell.sh ]; then
 #  . ~/shell/auto-nix-shell.sh
@@ -152,6 +152,7 @@ eval "$(zoxide init zsh)" > /dev/null
 export PATH="$HOME/bin/override:$HOME/.local/bin:$HOME/go/bin:$PATH:$HOME/bin"
 export PATH="/opt/homebrew/bin:$PATH"
 
+export PATH="$PATH:$HOME/lib/google-cloud-sdk/bin"
 # source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 source "$HOME/.zsh/wezterm.sh"
 
@@ -159,8 +160,10 @@ export GPG_TTY=$(tty)
 
 # Dealing with homebrew issues
 if [[ $(uname) == Darwin ]] ; then
-  export HOMEBREW_CURL_PATH="/opt/homebrew/Cellar/curl/$(ls -1 /opt/homebrew/Cellar/curl/ | tail -1)/bin/curl"
-  export HOMEBREW_DEVELOPER=1
+  if curl_version=$(ls -1 /opt/homebrew/Cellar/curl/ | tail -1) 2>/dev/null ; then
+    export HOMEBREW_CURL_PATH="/opt/homebrew/Cellar/curl/$curl_version/bin/curl"
+    export HOMEBREW_DEVELOPER=1
+  fi
 else
   export HOMEBREW_CURL_PATH=/usr/local/bin/curl
 fi
@@ -182,3 +185,9 @@ unset __conda_setup
 # <<< conda initialize <<<
 }
 
+if [[ -d /usr/local/opt/libpq/bin ]] ; then
+  export PATH="/usr/local/opt/libpq/bin:$PATH"
+  #For compilers to find libpq you may need to set:
+  #export LDFLAGS="-L/usr/local/opt/libpq/lib"
+  #export CPPFLAGS="-I/usr/local/opt/libpq/include"
+fi
