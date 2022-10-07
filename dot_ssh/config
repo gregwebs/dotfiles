@@ -1,0 +1,18 @@
+Host gitlab
+  Hostname gitlab.com
+  IdentityFile ~/.ssh/id_ed25519
+  IdentitiesOnly yes
+
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+  ServerAliveInterval 100
+  ServerAliveCountMax 5
+
+Host precision-vpn
+  User gweber
+  HostName 100.115.23.68
+  ServerAliveInterval 60
+  ServerAliveCountMax 30
+  ForwardAgent yes
