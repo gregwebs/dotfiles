@@ -47,8 +47,8 @@ return {
   tab_bar_at_bottom = true,
   scrollback_lines = 99999,
   -- color_scheme = "Solarized Dark Higher Contrast",
-  -- color_scheme = "Violet Light",
-  color_scheme = "Solarized (light) (terminal.sexy)"
+  color_scheme = "Violet Light",
+  -- color_scheme = "Solarized (light) (terminal.sexy)",
   keys=keys,
   window_padding = {
     left = 0,
