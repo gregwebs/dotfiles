@@ -2,6 +2,9 @@
         name = Greg Weber
 	email = 1183+gregwebs@users.noreply.github.com
 
+[includeIf "hasconfig:remote.*.url:git@gitlab.com:digitalmint/**"]
+    path = .gitconfig-digitalmint
+
 [url "ssh://git@gitlab.com/"]
 	insteadOf = https://gitlab.com/
 [url "ssh://git@github.com/"]
