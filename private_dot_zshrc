@@ -163,9 +163,10 @@ if [[ $(uname) == Darwin ]] ; then
   if curl_version=$(ls -1 /opt/homebrew/Cellar/curl/ | tail -1) 2>/dev/null ; then
     export HOMEBREW_CURL_PATH="/opt/homebrew/Cellar/curl/$curl_version/bin/curl"
     export HOMEBREW_DEVELOPER=1
+    export PATH="/opt/homebrew/Cellar/curl/$curl_version/bin:$PATH"
   fi
 else
-  export HOMEBREW_CURL_PATH=/usr/local/bin/curl
+    export HOMEBREW_CURL_PATH=$(which curl)
 fi
 
 function setup_conda() {
