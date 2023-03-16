@@ -16,3 +16,10 @@ Host precision-vpn
   ServerAliveInterval 60
   ServerAliveCountMax 30
   ForwardAgent yes
+
+Host mac-m1
+  User gweber
+  HostName 100.102.187.27
+  ServerAliveInterval 60
+  ServerAliveCountMax 30
+  ForwardAgent yes
