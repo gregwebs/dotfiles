@@ -1,14 +1,43 @@
 function gpush() {
 	git push origin "$(git branch --show-current)" "$@"
 }
+alias harlequin="harlequin --theme gruvbox-light -a"
+alias tzone="tz UTC EST PST8PDT"
+alias cronnow="date -u '+%M %H %d %m *'"
 alias nz="nix-shell --run zsh"
 alias g="git"
 alias av="aws-vault exec"
 alias nv="nvim -p"
-alias kl="kubectl"
-alias avk="kubectl"
+alias k="kubectl"
+alias kn="kubectl -n"
+alias kd="kubectl describe"
+alias kg="kubectl get"
 
-function k(){
+alias warpshell="printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "bash"}}\x9c'"
+
+  function frg {
+    result=`rg --ignore-case --color=always --line-number --no-heading "$@" |
+      fzf --ansi \
+          --color 'hl:-1:underline,hl+:-1:underline:reverse' \
+          --delimiter ':' \
+          --preview "bat --color=always {1} --theme='Solarized (light)' --highlight-line {2}" \
+          --preview-window 'up,60%,border-bottom,+{2}+3/3,~3'`
+    file="${result%%:*}"
+    linenumber=`echo "${result}" | cut -d: -f2`
+    if [ ! -z "$file" ]; then
+            $EDITOR +"${linenumber}" "$file"
+    fi
+  }
+
+function wk {
+  cd "$(walk "$@")"
+}
+
+function gpush(){
+  git push origin "$(git branch --show-current)" "$@"
+}
+
+function kn(){
   namespace="$1"
   shift
   object="$1"
@@ -48,14 +77,6 @@ function k1(){
   fi
 }
 
-function awsvn(){
-  awsvault --no-session -- "$@"
-}
-
-function awsv(){
-  awsvault -- "$@"
-}
-
 function klogs(){
   ns="$1"
   shift
@@ -67,6 +88,7 @@ function klogs(){
     kubectl -n "$ns" logs "$pod" "$@"
   fi
 }
+
 function klogsf(){
   if ! pod=$(kubectl -n "$1" get pods | grep Running | awk "/$2/ {print \$1}") || [[ -z "$pod" ]] ; then
     echo "error getting pod $2" >&2
@@ -74,6 +96,7 @@ function klogsf(){
     kubectl -n "$1" logs -f "$pod"
   fi
 }
+
 function kpod(){
   if ! pod=$(kubectl -n "$1" get pods | awk "/$2/ {print \$1}") || [[ -z "$pod" ]] ; then
     echo "error getting pod $2" >&2
@@ -81,7 +104,6 @@ function kpod(){
     echo "$pod"
   fi
 }
-alias kn="kubectl -n"
 alias preview="fzf --preview 'bat --color \"always\" {}'"
 function cheat(){ curl "cht.sh/$1" }
 
@@ -99,9 +121,6 @@ function bucket-owner-folder(){
   do
     bucket-owner "$bucket" "$folder$f"
   done
-}
-function lb() {
-    vim ~/logbook/$(date '+%Y-%m-%d').md
 }
 alias ip-addr="wget http://ipinfo.io/ip -qO -"
 alias nv="nvim -p"
@@ -136,7 +155,7 @@ fi
 alias diffdirs="diff -ENwbur"
 ## GIT ##
 alias gchanged="g st | egrep 'new|modified' | sed 's/.*://'"
-alias gmodified="git status | grep modified: | awk '{print \$3}'"
+alias gmodified="git status | grep modified: | awk '{print \$2}'"
 alias gdeleted="git status | grep deleted: | awk '{print \$3}'"
 alias gdiffed="git diff master | grep diff | awk '{print \$3}' | sed 's|a//||'"
 alias branches="git branch -a | grep -v 'braid\|tags'"
@@ -149,20 +168,9 @@ alias local_ip='ifconfig | grep 192'
 alias cD='c ~/Desktop'
 # alias e='~/bin/e.rb'
 alias g='git'
-alias h='history | grep'
-alias ki='kill -9'
-alias i='sudo apt-get install'
-alias f=file
-alias fr='n find / -name'
-alias fh='n find ./ -name'
-alias wcl='wc -l'
-alias v='vim -p'
-alias vr='vim -p -R'
-alias gv='gvim -p'
 alias first='print *(.) | xargs head -1' # should make this no directories
 alias load='print ${(@)$(</proc/loadavg)[1,3]}'
 alias loadn='print -n ${(@)$(</proc/loadavg)[1,3]}'
-alias yi='yi --as=vim'
 
 ## GREP ##
 alias eg='egrep'
@@ -176,8 +184,6 @@ alias s='source ~/.zshrc'
 alias :q='exit'
 alias xx='exit'
 #############
-
-# thinkpad # sudo pm-suspend --quirk-s3-bios --quirk-s3-mode
 
 #### CHANGE DIRECTORY #####
 alias cdusb='cd `usb`'
