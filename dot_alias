@@ -1,6 +1,7 @@
 function gpush() {
 	git push origin "$(git branch --show-current)" "$@"
 }
+alias godoc-http="go run golang.org/x/pkgsite/cmd/pkgsite@latest -open"
 alias harlequin="harlequin --theme gruvbox-light -a"
 alias tzone="tz UTC EST PST8PDT"
 alias cronnow="date -u '+%M %H %d %m *'"
