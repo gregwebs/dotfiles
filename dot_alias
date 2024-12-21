@@ -1,3 +1,6 @@
+function gpush() {
+	git push origin "$(git branch --show-current)" "$@"
+}
 alias nz="nix-shell --run zsh"
 alias g="git"
 alias av="aws-vault exec"
