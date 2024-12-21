@@ -161,9 +161,10 @@ export GPG_TTY=$(tty)
 # Dealing with homebrew issues
 if [[ $(uname) == Darwin ]] ; then
   if curl_version=$(ls -1 /opt/homebrew/Cellar/curl/ | tail -1) 2>/dev/null ; then
-    export HOMEBREW_CURL_PATH="/opt/homebrew/Cellar/curl/$curl_version/bin/curl"
+    homebrew_curl_path="/opt/homebrew/Cellar/curl/$curl_version/bin"
+    export HOMEBREW_CURL_PATH="$homebrew_curl_path/curl"
     export HOMEBREW_DEVELOPER=1
-    export PATH="/opt/homebrew/Cellar/curl/$curl_version/bin:$PATH"
+    export PATH="$homebrew_curl_path:$PATH"
   fi
 else
     export HOMEBREW_CURL_PATH=$(which curl)
