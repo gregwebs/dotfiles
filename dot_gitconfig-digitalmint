@@ -1,3 +1,21 @@
 [user]
-        name = Greg Weber
+	name = Greg Weber
 	email = gweber@digitalmint.io
+
+[user]
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOgET9ksJnIQrbXRBNTmsKUdbwcFfPVyMetxaT5+2m7W
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+
+[commit]
+  gpgsign = true
+
+[url "ssh://git@gitlab.com/"]
+	insteadOf = https://gitlab.com/
+
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
