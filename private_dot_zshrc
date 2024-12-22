@@ -148,11 +148,15 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)" > /dev/null
 #  . ~/shell/auto-nix-shell.sh
 #fi
 
-#export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export PATH="$HOME/.docker/bin:$PATH"
+export PATH="$PATH:$HOME/.bin"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH="$HOME/bin/override:$HOME/.local/bin:$HOME/go/bin:$PATH:$HOME/bin"
 export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/nix/store/1f66diwwq3f73ys6rlipcbgfqpabdf7w-devenv/bin:$PATH"
 
-export PATH="$PATH:$HOME/lib/google-cloud-sdk/bin"
+# export PATH="$PATH:$HOME/lib/google-cloud-sdk/bin"
 # source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 source "$HOME/.zsh/wezterm.sh"
 
@@ -161,13 +165,11 @@ export GPG_TTY=$(tty)
 # Dealing with homebrew issues
 if [[ $(uname) == Darwin ]] ; then
   if curl_version=$(ls -1 /opt/homebrew/Cellar/curl/ | tail -1) 2>/dev/null ; then
-    homebrew_curl_path="/opt/homebrew/Cellar/curl/$curl_version/bin"
-    export HOMEBREW_CURL_PATH="$homebrew_curl_path/curl"
+    export HOMEBREW_CURL_PATH="/opt/homebrew/Cellar/curl/$curl_version/bin/curl"
     export HOMEBREW_DEVELOPER=1
-    export PATH="$homebrew_curl_path:$PATH"
   fi
 else
-    export HOMEBREW_CURL_PATH=$(which curl)
+  export HOMEBREW_CURL_PATH=/usr/local/bin/curl
 fi
 
 function setup_conda() {
@@ -193,3 +195,19 @@ if [[ -d /usr/local/opt/libpq/bin ]] ; then
   #export LDFLAGS="-L/usr/local/opt/libpq/lib"
   #export CPPFLAGS="-I/usr/local/opt/libpq/include"
 fi
+
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+export PSQL_PAGER='ov -F -C -d "|" -H1'
+
+# export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl/lib/
+eval "$(direnv hook zsh)"
+
+# bun completions
+[ -s "/Users/gregweber/.bun/_bun" ] && source "/Users/gregweber/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+export LESS=FRX
